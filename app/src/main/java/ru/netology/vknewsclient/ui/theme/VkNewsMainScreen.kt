@@ -1,5 +1,6 @@
 package ru.netology.vknewsclient.ui.theme
 
+import android.util.Log
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -14,8 +15,11 @@ import kotlinx.coroutines.launch
 
 fun MainScreen() {
 
+    val snackbarHostState = remember {
+        SnackbarHostState()
+    }
+    Log.d("MainScreen", snackbarHostState.currentSnackbarData.toString())
     val fabIsVisible = remember { mutableStateOf(true) }
-    val snackbarHostState = SnackbarHostState()
     val scope = rememberCoroutineScope()
 
     Scaffold(
