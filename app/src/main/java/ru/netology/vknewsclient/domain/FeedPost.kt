@@ -2,8 +2,8 @@ package ru.netology.vknewsclient.domain
 
 import ru.netology.vknewsclient.R
 
-data class FeedPost (
-
+data class FeedPost(
+    val id: Int = 0,
     val communityName: String = "/dev/null",
     val publicationDate: String = "14:00",
     val avatarResId: Int = R.drawable.post_comunity_thumbnail,
@@ -14,5 +14,5 @@ data class FeedPost (
         StatisticItem(type = StatisticType.SHARES, 7),
         StatisticItem(type = StatisticType.COMMENTS, 8),
         StatisticItem(type = StatisticType.LIKES, 23),
-        )
     )
+)
