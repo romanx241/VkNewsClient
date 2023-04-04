@@ -12,19 +12,21 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import ru.netology.vknewsclient.MainViewModel
+import ru.netology.vknewsclient.navigation.AppNavGraph
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
 
 fun MainScreen(viewModel: MainViewModel) {
 
-    val selectedNavItem by viewModel.selectedNavItem.observeAsState(NavigationItem.Home)
+//    val selectedNavItem by viewModel.selectedNavItem.observeAsState(NavigationItem.Home)
 
-
+    val navHostController = rememberNavController()
     val snackbarHostState = remember { SnackbarHostState() }
-    Log.d("MainScreen", snackbarHostState.currentSnackbarData.toString())
     val fabIsVisible = remember { mutableStateOf(true) }
     val scope = rememberCoroutineScope()
 
@@ -54,18 +56,18 @@ fun MainScreen(viewModel: MainViewModel) {
         },
         bottomBar = {
             BottomNavigation {
-//                val selectedItemPosition = remember {
-//                    mutableStateOf(0)
-//                }
+//                val selectedItemPosition = remember { mutableStateOf(0) }
+                val navBackStackEntry by navHostController.currentBackStackEntryAsState()
+                val currentRoute = navBackStackEntry?.destination?.route
                 val items = listOf(
                     NavigationItem.Home,
                     NavigationItem.Favourite,
                     NavigationItem.Profile
                 )
-                items.forEach {item ->
+                items.forEach { item ->
                     BottomNavigationItem(
-                        selected = selectedNavItem == item,
-                        onClick = { viewModel.selectNavItem(item) },
+                        selected = currentRoute == item.screen.route,
+                        onClick = { navHostController.navigate(item.screen.route) },
                         icon = {
                             Icon(item.icon, contentDescription = null)
                         },
@@ -80,24 +82,37 @@ fun MainScreen(viewModel: MainViewModel) {
 
         }
     ) { paddingValues ->
-    when(selectedNavItem){
-        NavigationItem.Home -> {
-            HomeScreen(viewModel = viewModel, paddingValues = paddingValues)
-        }
-        NavigationItem.Favourite -> TextCounter(name = "Favourite")
-        NavigationItem.Profile -> TextCounter(name = "Profile")
-        }
+        AppNavGraph(
+            navHostController = navHostController,
+            homeScreenContent = {
+                HomeScreen(
+                    viewModel = viewModel,
+                    paddingValues = paddingValues
+                )
+            },
+            favouriteScreenContent = { TextCounter(name = "Favourite") },
+            profileScreenContent = { TextCounter(name = "Profile") }
+        )
     }
 }
 
+//    when(selectedNavItem){
+//        NavigationItem.Home -> {
+//            HomeScreen(viewModel = viewModel, paddingValues = paddingValues)
+//        }
+//        NavigationItem.Favourite -> TextCounter(name = "Favourite")
+//        NavigationItem.Profile -> TextCounter(name = "Profile")
+//        }
+
+
 @Composable
 
-private fun TextCounter(name : String){
+private fun TextCounter(name: String) {
     var count by remember {
         mutableStateOf(0)
     }
     Text(
-        modifier = Modifier.clickable{count++},
+        modifier = Modifier.clickable { count++ },
         text = "$name Count: $count",
         color = Color.Black
 
