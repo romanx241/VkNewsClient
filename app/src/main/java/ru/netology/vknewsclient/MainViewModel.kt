@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.netology.vknewsclient.domain.FeedPost
 import ru.netology.vknewsclient.domain.StatisticItem
-import ru.netology.vknewsclient.ui.theme.NavigationItem
 
 class MainViewModel: ViewModel() {
 

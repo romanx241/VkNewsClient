@@ -1,6 +1,5 @@
 package ru.netology.vknewsclient.ui.theme
 
-import android.widget.AdapterView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -17,14 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.netology.vknewsclient.R
 import ru.netology.vknewsclient.domain.FeedPost
 import ru.netology.vknewsclient.domain.StatisticItem
 import ru.netology.vknewsclient.domain.StatisticType
-import java.lang.IllegalStateException
 
 @Composable
 fun PostCard(
