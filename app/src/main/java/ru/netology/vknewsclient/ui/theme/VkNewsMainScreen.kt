@@ -1,14 +1,12 @@
 package ru.netology.vknewsclient.ui.theme
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -17,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import ru.netology.vknewsclient.MainViewModel
 import ru.netology.vknewsclient.navigation.AppNavGraph
+import ru.netology.vknewsclient.navigation.Screen
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
@@ -67,7 +66,15 @@ fun MainScreen(viewModel: MainViewModel) {
                 items.forEach { item ->
                     BottomNavigationItem(
                         selected = currentRoute == item.screen.route,
-                        onClick = { navHostController.navigate(item.screen.route) },
+                        onClick = {
+                            navHostController.navigate(item.screen.route){
+                                popUpTo(Screen.NewsFeed.route) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                                  },
                         icon = {
                             Icon(item.icon, contentDescription = null)
                         },
@@ -108,7 +115,7 @@ fun MainScreen(viewModel: MainViewModel) {
 @Composable
 
 private fun TextCounter(name: String) {
-    var count by remember {
+    var count by rememberSaveable {
         mutableStateOf(0)
     }
     Text(
