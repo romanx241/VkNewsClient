@@ -15,16 +15,16 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import ru.netology.vknewsclient.MainViewModel
 import ru.netology.vknewsclient.navigation.AppNavGraph
+import ru.netology.vknewsclient.navigation.NavigationState
 import ru.netology.vknewsclient.navigation.Screen
+import ru.netology.vknewsclient.navigation.rememberNavigationState
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
 
 fun MainScreen(viewModel: MainViewModel) {
 
-//    val selectedNavItem by viewModel.selectedNavItem.observeAsState(NavigationItem.Home)
+    val navigationState = rememberNavigationState()
 
-    val navHostController = rememberNavController()
     val snackbarHostState = remember { SnackbarHostState() }
     val fabIsVisible = remember { mutableStateOf(true) }
     val scope = rememberCoroutineScope()
@@ -55,8 +55,7 @@ fun MainScreen(viewModel: MainViewModel) {
         },
         bottomBar = {
             BottomNavigation {
-//                val selectedItemPosition = remember { mutableStateOf(0) }
-                val navBackStackEntry by navHostController.currentBackStackEntryAsState()
+                val navBackStackEntry by navigationState.navHostController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
                 val items = listOf(
                     NavigationItem.Home,
@@ -66,15 +65,7 @@ fun MainScreen(viewModel: MainViewModel) {
                 items.forEach { item ->
                     BottomNavigationItem(
                         selected = currentRoute == item.screen.route,
-                        onClick = {
-                            navHostController.navigate(item.screen.route){
-                                popUpTo(Screen.NewsFeed.route) {
-                                    saveState = true
-                                }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                                  },
+                        onClick = { navigationState.navigateTo(item.screen.route) },
                         icon = {
                             Icon(item.icon, contentDescription = null)
                         },
@@ -90,7 +81,7 @@ fun MainScreen(viewModel: MainViewModel) {
         }
     ) { paddingValues ->
         AppNavGraph(
-            navHostController = navHostController,
+            navHostController = navigationState.navHostController,
             homeScreenContent = {
                 HomeScreen(
                     viewModel = viewModel,
