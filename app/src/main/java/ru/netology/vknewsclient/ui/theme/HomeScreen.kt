@@ -1,6 +1,6 @@
 package ru.netology.vknewsclient.ui.theme
 
-import androidx.activity.compose.BackHandler
+import android.widget.AdapterView
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,39 +15,32 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ru.netology.vknewsclient.MainViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import ru.netology.vknewsclient.NewsFeedViewModel
 import ru.netology.vknewsclient.domain.FeedPost
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
 
 fun HomeScreen(
-    viewModel : MainViewModel,
     paddingValues: PaddingValues,
-){
-    val screenState = viewModel.screenState.observeAsState(HomeScreenState.Initial)
+    onCommentClickListener: (FeedPost) -> Unit
 
-    when(val currentState = screenState.value){
-        is HomeScreenState.Posts -> {
+) {
+    val viewModel: NewsFeedViewModel = viewModel()
+    val screenState = viewModel.screenState.observeAsState(NewsFeedScreenState.Initial)
+
+    when (val currentState = screenState.value) {
+        is NewsFeedScreenState.Posts -> {
             FeedPosts(
                 viewModel = viewModel,
                 paddingValues = paddingValues,
-                posts = currentState.posts
+                posts = currentState.posts,
+                onCommentClickListener = onCommentClickListener
             )
         }
-        is HomeScreenState.Comments -> {
-            CommentsScreen(
-                feedPost = currentState.feedPost,
-                comments = currentState.comments,
-                onBackPressed = {
-                    viewModel.closeComments()
-                }
-            )
-            BackHandler {
-                viewModel.closeComments()
-            }
-        }
-        HomeScreenState.Initial -> {
+
+        NewsFeedScreenState.Initial -> {
 
         }
     }
@@ -57,11 +50,12 @@ fun HomeScreen(
 @Composable
 
 private fun FeedPosts(
-    viewModel : MainViewModel,
+    viewModel: NewsFeedViewModel,
     paddingValues: PaddingValues,
-    posts : List<FeedPost>
+    posts: List<FeedPost>,
+    onCommentClickListener: (FeedPost) -> Unit
 ) {
-    LazyColumn (
+    LazyColumn(
         modifier = Modifier.padding(paddingValues),
         contentPadding = PaddingValues(
             top = 16.dp,
@@ -70,13 +64,13 @@ private fun FeedPosts(
             bottom = 72.dp
         ),
         verticalArrangement = Arrangement.spacedBy(8.dp)
-    ){
+    ) {
         items(
             items = posts,
             key = { it.id }
         ) { feedPost ->
             val dismissState = rememberDismissState()
-            if(dismissState.isDismissed(DismissDirection.EndToStart)){
+            if (dismissState.isDismissed(DismissDirection.EndToStart)) {
                 viewModel.remove(feedPost)
             }
             SwipeToDismiss(
@@ -97,7 +91,7 @@ private fun FeedPosts(
                         viewModel.updateCount(feedPost, statisticItem)
                     },
                     onCommentClickListener = {
-                        viewModel.showComments(feedPost)
+                        onCommentClickListener(feedPost)
                     },
                 )
             }
