@@ -90,15 +90,6 @@ fun MainScreen(viewModel: MainViewModel) {
     }
 }
 
-//    when(selectedNavItem){
-//        NavigationItem.Home -> {
-//            HomeScreen(viewModel = viewModel, paddingValues = paddingValues)
-//        }
-//        NavigationItem.Favourite -> TextCounter(name = "Favourite")
-//        NavigationItem.Profile -> TextCounter(name = "Profile")
-//        }
-
-
 @Composable
 
 private fun TextCounter(name: String) {
