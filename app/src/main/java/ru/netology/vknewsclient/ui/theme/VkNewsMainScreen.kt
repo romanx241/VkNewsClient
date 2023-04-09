@@ -11,9 +11,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.currentBackStackEntryAsState
 import kotlinx.coroutines.launch
-import ru.netology.vknewsclient.NewsFeedViewModel
 import ru.netology.vknewsclient.domain.FeedPost
 import ru.netology.vknewsclient.navigation.AppNavGraph
+import ru.netology.vknewsclient.navigation.Screen
 import ru.netology.vknewsclient.navigation.rememberNavigationState
 
 @Composable
@@ -82,23 +82,22 @@ fun MainScreen() {
     ) { paddingValues ->
         AppNavGraph(
             navHostController = navigationState.navHostController,
-            homeScreenContent = {
-                if (commentsToPost.value == null) {
+            newsFeedScreenContent = {
                     HomeScreen(
                         paddingValues = paddingValues,
                         onCommentClickListener = {
                             commentsToPost.value = it
-
+                            navigationState.navigateTo(Screen.Comments.route)
                         }
                     )
-                } else {
-                    CommentsScreen(
-                        onBackPressed = {
-                            commentsToPost.value = null
-                        },
-                        feedPost = commentsToPost.value!!
-                    )
-                }
+                },
+            commentsScreenContent = {
+                CommentsScreen(
+                    onBackPressed = {
+                        commentsToPost.value = null
+                    },
+                    feedPost = commentsToPost.value!!
+                )
             },
             favouriteScreenContent = { TextCounter(name = "Favourite") },
             profileScreenContent = { TextCounter(name = "Profile") }
