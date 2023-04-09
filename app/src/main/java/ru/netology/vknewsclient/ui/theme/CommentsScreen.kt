@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.netology.vknewsclient.CommentsViewModel
+import ru.netology.vknewsclient.CommentsViewModelFactory
 import ru.netology.vknewsclient.domain.FeedPost
 import ru.netology.vknewsclient.domain.PostComment
 
@@ -23,9 +24,12 @@ import ru.netology.vknewsclient.domain.PostComment
 @Composable
 
 fun CommentsScreen(
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    feedPost: FeedPost
 ) {
-    val viewModel: CommentsViewModel = viewModel()
+    val viewModel: CommentsViewModel = viewModel(
+        factory = CommentsViewModelFactory(feedPost)
+    )
     val screenState = viewModel.screenState.observeAsState(CommentsScreenState.Initial)
     val currentState = screenState.value
     if (currentState is CommentsScreenState.Comments) {
