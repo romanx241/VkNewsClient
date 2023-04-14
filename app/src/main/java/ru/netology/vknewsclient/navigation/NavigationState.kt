@@ -5,6 +5,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import ru.netology.vknewsclient.domain.FeedPost
 
 class NavigationState(
 
@@ -19,8 +20,8 @@ class NavigationState(
             restoreState = true
         }
     }
-    fun navigateToComments(){
-        navHostController.navigate(Screen.Comments.route)
+    fun navigateToComments(feedPost: FeedPost){
+        navHostController.navigate(Screen.Comments.getRouteWithArgs(feedPost))
     }
 }
 

@@ -22,10 +22,6 @@ import ru.netology.vknewsclient.navigation.rememberNavigationState
 fun MainScreen() {
 
     val navigationState = rememberNavigationState()
-    val commentsToPost: MutableState<FeedPost?> = remember {
-        mutableStateOf(null)
-    }
-
     val snackbarHostState = remember { SnackbarHostState() }
     val fabIsVisible = remember { mutableStateOf(true) }
     val scope = rememberCoroutineScope()
@@ -97,17 +93,16 @@ fun MainScreen() {
                     HomeScreen(
                         paddingValues = paddingValues,
                         onCommentClickListener = {
-                            commentsToPost.value = it
-                            navigationState.navigateToComments()
+                            navigationState.navigateToComments(it)
                         }
                     )
                 },
-            commentsScreenContent = {
+            commentsScreenContent = { feedPost ->
                 CommentsScreen(
                     onBackPressed = {
                         navigationState.navHostController.popBackStack()
                     },
-                    feedPost = commentsToPost.value!!
+                    feedPost = feedPost
                 )
             },
             favouriteScreenContent = { TextCounter(name = "Favourite") },
