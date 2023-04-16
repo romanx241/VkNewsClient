@@ -12,9 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import kotlinx.coroutines.launch
-import ru.netology.vknewsclient.domain.FeedPost
 import ru.netology.vknewsclient.navigation.AppNavGraph
-import ru.netology.vknewsclient.navigation.Screen
 import ru.netology.vknewsclient.navigation.rememberNavigationState
 
 @Composable
@@ -121,8 +119,6 @@ private fun TextCounter(name: String) {
         modifier = Modifier.clickable { count++ },
         text = "$name Count: $count",
         color = Color.Black
-
     )
-
 }
 
