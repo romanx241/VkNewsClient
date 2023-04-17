@@ -8,11 +8,11 @@ import androidx.navigation.compose.rememberNavController
 import ru.netology.vknewsclient.domain.FeedPost
 
 class NavigationState(
-
     val navHostController: NavHostController
 ) {
-    fun navigateTo(route : String){
-        navHostController.navigate(route){
+
+    fun navigateTo(route: String) {
+        navHostController.navigate(route) {
             popUpTo(navHostController.graph.findStartDestination().id) {
                 saveState = true
             }
@@ -20,18 +20,17 @@ class NavigationState(
             restoreState = true
         }
     }
-    fun navigateToComments(feedPost: FeedPost){
-        navHostController.navigate(Screen.Comments.getRouteWithArgs(feedPost))
+
+    fun navigateToComments(feedPost: FeedPost) {
+        navHostController.navigate(Screen.Comments.getRouteWithArgs(feedPost)) // comments/15
     }
 }
 
 @Composable
-
 fun rememberNavigationState(
     navHostController: NavHostController = rememberNavController()
-) : NavigationState {
+): NavigationState {
     return remember {
         NavigationState(navHostController)
     }
-
 }
