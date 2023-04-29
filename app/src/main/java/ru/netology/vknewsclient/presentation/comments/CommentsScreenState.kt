@@ -1,4 +1,4 @@
-package ru.netology.vknewsclient.ui.theme
+package ru.netology.vknewsclient.presentation.comments
 
 import ru.netology.vknewsclient.domain.FeedPost
 import ru.netology.vknewsclient.domain.PostComment

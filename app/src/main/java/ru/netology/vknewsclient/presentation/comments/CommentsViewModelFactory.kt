@@ -1,4 +1,4 @@
-package ru.netology.vknewsclient
+package ru.netology.vknewsclient.presentation.comments
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

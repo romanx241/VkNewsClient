@@ -1,4 +1,4 @@
-package ru.netology.vknewsclient.ui.theme
+package ru.netology.vknewsclient.presentation.main
 
 import androidx.compose.foundation.clickable
 import androidx.compose.material.*
@@ -14,6 +14,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import kotlinx.coroutines.launch
 import ru.netology.vknewsclient.navigation.AppNavGraph
 import ru.netology.vknewsclient.navigation.rememberNavigationState
+import ru.netology.vknewsclient.presentation.comments.CommentsScreen
+import ru.netology.vknewsclient.presentation.news.NewsFeedScreen
 
 @Composable
 
@@ -88,7 +90,7 @@ fun MainScreen() {
         AppNavGraph(
             navHostController = navigationState.navHostController,
             newsFeedScreenContent = {
-                    HomeScreen(
+                    NewsFeedScreen(
                         paddingValues = paddingValues,
                         onCommentClickListener = {
                             navigationState.navigateToComments(it)

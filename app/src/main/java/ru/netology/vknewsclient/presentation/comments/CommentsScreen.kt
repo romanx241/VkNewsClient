@@ -1,4 +1,4 @@
-package ru.netology.vknewsclient.ui.theme
+package ru.netology.vknewsclient.presentation.comments
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -15,10 +15,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import ru.netology.vknewsclient.CommentsViewModel
-import ru.netology.vknewsclient.CommentsViewModelFactory
 import ru.netology.vknewsclient.domain.FeedPost
 import ru.netology.vknewsclient.domain.PostComment
+import ru.netology.vknewsclient.ui.theme.VkNewsClientTheme
 
 
 @Composable

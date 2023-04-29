@@ -1,4 +1,4 @@
-package ru.netology.vknewsclient.ui.theme
+package ru.netology.vknewsclient.presentation.news
 
 import ru.netology.vknewsclient.domain.FeedPost
 

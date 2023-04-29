@@ -1,4 +1,4 @@
-package ru.netology.vknewsclient.ui.theme
+package ru.netology.vknewsclient.samples
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult

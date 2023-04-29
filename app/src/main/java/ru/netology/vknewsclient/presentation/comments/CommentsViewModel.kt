@@ -1,11 +1,10 @@
-package ru.netology.vknewsclient
+package ru.netology.vknewsclient.presentation.comments
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.netology.vknewsclient.domain.FeedPost
 import ru.netology.vknewsclient.domain.PostComment
-import ru.netology.vknewsclient.ui.theme.CommentsScreenState
 
 class CommentsViewModel(feedPost: FeedPost) : ViewModel() {
 

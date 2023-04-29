@@ -1,11 +1,10 @@
-package ru.netology.vknewsclient
+package ru.netology.vknewsclient.presentation.news
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.netology.vknewsclient.domain.FeedPost
 import ru.netology.vknewsclient.domain.StatisticItem
-import ru.netology.vknewsclient.ui.theme.NewsFeedScreenState
 
 class NewsFeedViewModel: ViewModel() {
 
