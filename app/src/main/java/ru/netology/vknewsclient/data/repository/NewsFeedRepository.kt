@@ -5,7 +5,9 @@ import com.vk.api.sdk.VKPreferencesKeyValueStorage
 import com.vk.api.sdk.auth.VKAccessToken
 import ru.netology.vknewsclient.data.mapper.NewsFeedMapper
 import ru.netology.vknewsclient.data.network.ApiFactory
+import ru.netology.vknewsclient.data.network.ApiService
 import ru.netology.vknewsclient.domain.FeedPost
+import ru.netology.vknewsclient.domain.PostComment
 import ru.netology.vknewsclient.domain.StatisticItem
 import ru.netology.vknewsclient.domain.StatisticType
 
@@ -47,6 +49,15 @@ class NewsFeedRepository(application: Application) {
             postId = feedPost.id
         )
         _feedPosts.remove(feedPost)
+    }
+
+    suspend fun getComments(feedPost: FeedPost) : List<PostComment>{
+        val comments = apiService.getComments(
+            access_token = getAccessToken(),
+            ownerId = feedPost.communityId,
+            postId = feedPost.id
+        )
+        return mapper.mapResponseToComments(comments)
     }
 
     suspend fun changeLikeStatus(feedPost: FeedPost){
