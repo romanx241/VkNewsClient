@@ -1,7 +1,5 @@
 package ru.netology.vknewsclient.domain
 
-import ru.netology.vknewsclient.R
-
 data class PostComment(
 
     val id: Long,
